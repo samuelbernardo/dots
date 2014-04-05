@@ -1,0 +1,43 @@
+{
+   "checksum": "bebf1fc4d20e08a3b11b05039bcd558e",
+   "roots": {
+      "bookmark_bar": {
+         "children": [ {
+            "children": [ {
+               "date_added": "13040903931210410",
+               "id": "4",
+               "name": "Teórica - Sistemas Empresariais Integrados - Instituto Superior Técnico",
+               "type": "url",
+               "url": "https://fenix.tecnico.ulisboa.pt/disciplinas/sei3364/2012-2013/2-semestre/teorica?_request_checksum_=ceeb8344f130ed398c4f7746c7e2333046618edd"
+            } ],
+            "date_added": "13040903943988288",
+            "date_modified": "13040903943989780",
+            "id": "5",
+            "name": "SEI",
+            "type": "folder"
+         } ],
+         "date_added": "13040903628922217",
+         "date_modified": "13040903931210410",
+         "id": "1",
+         "name": "Bookmarks Bar",
+         "type": "folder"
+      },
+      "other": {
+         "children": [  ],
+         "date_added": "13040903628922244",
+         "date_modified": "0",
+         "id": "2",
+         "name": "Other Bookmarks",
+         "type": "folder"
+      },
+      "synced": {
+         "children": [  ],
+         "date_added": "13040903628922250",
+         "date_modified": "0",
+         "id": "3",
+         "name": "Mobile Bookmarks",
+         "type": "folder"
+      }
+   },
+   "version": 1
+}
