@@ -18,5 +18,5 @@
 # next line.
 # exec gnome-session
 
-xscreensaver -nosplash &
+#xscreensaver -nosplash &
 

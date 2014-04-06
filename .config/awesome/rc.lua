@@ -418,3 +418,7 @@ client.add_signal("unfocus", function(c) c.border_color = beautiful.border_norma
 
 -- Java hack
 os.execute("wmname LG3D")
+
+-- Screen saver and lock screen
+awful.util.spawn_with_shell("xscreensaver -no-splash")
+

@@ -1,11 +1,11 @@
 # XScreenSaver Preferences File
-# Written by xscreensaver-demo 5.26 for samuel on Sat Apr  5 23:20:43 2014.
+# Written by xscreensaver-demo 5.26 for samuel on Sat Apr  5 23:45:42 2014.
 # http://www.jwz.org/xscreensaver/
 
 timeout:	0:10:00
-cycle:		0:10:00
-lock:		False
-lockTimeout:	0:00:00
+cycle:		0:02:00
+lock:		True
+lockTimeout:	0:01:00
 passwdTimeout:	0:00:30
 visualID:	default
 installColormap:    True
@@ -24,11 +24,11 @@ fadeTicks:	20
 captureStderr:	True
 ignoreUninstalledPrograms:False
 font:		*-medium-r-*-140-*-m-*
-dpmsEnabled:	False
-dpmsQuickOff:	False
-dpmsStandby:	2:00:00
-dpmsSuspend:	2:00:00
-dpmsOff:	4:00:00
+dpmsEnabled:	True
+dpmsQuickOff:	True
+dpmsStandby:	0:10:00
+dpmsSuspend:	0:15:00
+dpmsOff:	0:20:00
 grabDesktopImages:  False
 grabVideoFrames:    False
 chooseRandomImages: False
@@ -52,10 +52,10 @@ programs:								      \
 				helix -root				    \n\
 				hopalong -root				    \n\
 				imsmap -root				    \n\
--				noseguy -root				    \n\
--				pyro -root				    \n\
+				noseguy -root				    \n\
+				pyro -root				    \n\
 				qix -root				    \n\
--				rocks -root				    \n\
+				rocks -root				    \n\
 				rorschach -root				    \n\
 				decayscreen -root			    \n\
 				flame -root				    \n\
@@ -103,7 +103,7 @@ programs:								      \
 				distort -root				    \n\
 				epicycle -root				    \n\
 				flow -root				    \n\
-- GL: 				glplanet -root				    \n\
+  GL: 				glplanet -root				    \n\
 				interference -root			    \n\
 				kumppa -root				    \n\
   GL: 				lament -root				    \n\
@@ -166,11 +166,11 @@ programs:								      \
   GL: 				lavalite -root				    \n\
 -				polyominoes -root			    \n\
   GL: 				queens -root				    \n\
-- GL: 				sballs -root				    \n\
+  GL: 				sballs -root				    \n\
   GL: 				spheremonics -root			    \n\
 -				thornbird -root				    \n\
 				twang -root				    \n\
-- GL: 				antspotlight -root			    \n\
+  GL: 				antspotlight -root			    \n\
 				apple2 -root				    \n\
   GL: 				atunnel -root				    \n\
 				barcode -root				    \n\
@@ -188,7 +188,7 @@ programs:								      \
   GL: 				glmatrix -root				    \n\
 - GL: 				glslideshow -root			    \n\
   GL: 				hypertorus -root			    \n\
-- GL: 				jigglypuff -root			    \n\
+  GL: 				jigglypuff -root			    \n\
 				metaballs -root				    \n\
   GL: 				mirrorblob -root			    \n\
 				piecewise -root				    \n\
