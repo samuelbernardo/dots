@@ -251,7 +251,7 @@ globalkeys = awful.util.table.join(
             awful.client.focus.history.previous()
             if client.focus then
                 client.focus:raise()
-            endTab
+            end
         end),
 
 		awful.key({ altkey, "Control" }, "l", function () awful.util.spawn("xscreensaver-command -lock") end),
@@ -281,6 +281,7 @@ globalkeys = awful.util.table.join(
 		keydoc.group("Prompt"),
 
     awful.key({ modkey },            "r",     function () mypromptbox[mouse.screen]:run() end),
+    awful.key({ altkey },            "F2",     function () mypromptbox[mouse.screen]:run() end),
 
     awful.key({ modkey }, "x",
               function ()
