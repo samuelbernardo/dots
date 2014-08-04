@@ -300,7 +300,8 @@ globalkeys = awful.util.table.join(
             awful.client.focus.byidx(-1)
             if client.focus then client.focus:raise() end
         end),
-    awful.key({ modkey,           }, "w", function () mymainmenu:show({keygrabber=true}) end),
+    --awful.key({ modkey,           }, "w", function () mymainmenu:show({keygrabber=true}) end),
+    awful.key({ modkey,           }, "w", function () awful.util.spawn("/usr/bin/python -O /usr/share/wicd/gtk/wicd-client.pyc") end, "Spawn WIFI Manager"),
 
     -- Layout manipulation
     awful.key({ modkey, "Shift"   }, "j", function () awful.client.swap.byidx(  1)    end, "Swap with next window"),

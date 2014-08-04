@@ -9,6 +9,11 @@
 # Start a XTerm
 #/usr/bin/X11/xterm &
 
+#xscreensaver -nosplash &
+
+# To have the touchpad disabled automatically when you begin typing, add the following line to your ~/.xinitrc (before any line starting with exec, otherwise the command will not be executed):
+syndaemon -t -k -i 1 &
+
 # Start the systems window manager.
 # See WindowManagers for other choices.
 #exec /etc/alternatives/x-window-manager
@@ -17,6 +22,19 @@
 # '#' before the previous line and uncomment the 
 # next line.
 # exec gnome-session
+exec $1
 
-#xscreensaver -nosplash &
+#DEFAULTSESSION=awesome
+#case "$1" in
+#     awesome) exec awesome ;;
+#     xfce) exec xfce4-session ;;
+#     gnome3) exec gnome-session ;;
+#     kde) exec startkde ;;
+#     cinnamon) exec awesome ;;
+#     #cinnamon) exec gnome-session-cinnamon ;;
+#     razor-qt) exec razor-session ;;
+#     lxde) exec lxsession ;;
+#     mate) exec mate-session ;;
+#     *) exec $DEFAULTSESSION ;;
+#esac
 

@@ -1,0 +1,6 @@
+#SUBSYSTEM=="input", KERNEL=="mouse[0-9]*", ACTION=="add", ENV{DISPLAY}=":0", ENV{XAUTHORITY}="/home/samuel/.Xauthority", RUN+="/usr/bin/synclient TouchpadOff=1"
+SUBSYSTEM=="input", KERNEL=="mouse[0-9]*", ACTION=="add", ENV{DISPLAY}=":0", ENV{XAUTHORITY}="/home/samuel/.Xauthority", RUN+="/bin/sh -c '/usr/bin/synclient TouchpadOff=1; sleep 1; /bin/killall syndaemon;'"
+SUBSYSTEM=="input", KERNEL=="mouse[0-9]*", ACTION=="remove", ENV{DISPLAY}=":0", ENV{XAUTHORITY}="/home/samuel/.Xauthority", RUN+="/usr/bin/synclient TouchpadOff=0"
+
+# Disable syndaemon
+#SUBSYSTEM=="input", KERNEL=="mouse[0-9]", ACTION=="add", PROGRAM="/usr/bin/find /var/run/gdm -name username -print -quit", ENV{DISPLAY}=":0", ENV{XAUTHORITY}="$result/database", RUN+="/bin/sh -c '/usr/bin/synclient TouchpadOff=1 ; sleep 1; /bin/killall syndaemon; '"
