@@ -19,7 +19,6 @@ export EDITOR=vim
 # command line alias
 alias ls="ls --color=auto"
 alias cdafs="cd /afs/ist.utl.pt/users/2/5/ist146425"
-alias .="cd .."
 alias ..="cd ../.."
 alias ...="cd ../../.."
 alias l="ls -alhi"

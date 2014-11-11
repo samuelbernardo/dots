@@ -18,6 +18,11 @@ syndaemon -t -k -i 1 &
 # See WindowManagers for other choices.
 #exec /etc/alternatives/x-window-manager
 
+xrdb -merge ~/.Xresources
+bluetooth-applet&
+volti&
+#ck-launch-session awesome
+
 # To run Gnome instead of system default, place a 
 # '#' before the previous line and uncomment the 
 # next line.

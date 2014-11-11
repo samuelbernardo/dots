@@ -7,6 +7,9 @@ require("beautiful")
 -- Notification library
 require("naughty")
 
+-- User added functions
+require("helpers")
+
 -- Set compositing
 awful.util.spawn_with_shell("xcompmgr -cF &")
 
@@ -15,6 +18,9 @@ require("debian.menu")
 
 -- Define help menu for defined keys
 local keydoc = require("keydoc")
+
+-- Volume widget
+require("volume")
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -123,7 +129,7 @@ function batteryCheck(adapter)
     if batInfos then
         local battery = batInfos[1]
         local dir = batInfos[2]
-        if dir:match("v") and tonumber(battery) < 10 then
+        if dir:match("v") and tonumber(battery) < 15 then
                naughty.notify({ preset = naughty.config.presets.critical,
                                 title = "Batterie Low",
                                 text = " ".. battery .. "% left",
@@ -131,6 +137,14 @@ function batteryCheck(adapter)
                                 font = "Liberation 11", })
        end
        infos = " " .. dir .. battery .. "% "
+
+			-- set hibernate timmer when battery is lower than expected
+			 if dir:match("v") and tonumber(battery) < 7 then
+				os.execute("hibernate")
+				infos = infos .. " -> going to hibernate to spare battery!"
+			 end
+			-- end hibernate part
+
    else
        infos = "A/C"
    end
@@ -159,7 +173,7 @@ myawesomemenu = {
 mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
                                     { "Debian", debian.menu.Debian_menu.Debian },
 																		{ "firefox", "firefox"},
-																		{ "chrome","google-chrome"},
+																		{ "chrome","google-chrome.bash"},
 																		{ "thunderbird", "thunderbird"},
 																		{ "pidgin", "pidgin"},
 																		{ "skype","skype"},
@@ -182,6 +196,7 @@ mysystray = widget({ type = "systray" })
 
 -- Create a wibox for each screen and add it
 mywibox = {}
+-- mywibox[s].widgets = { volume_widget }
 mypromptbox = {}
 mylayoutbox = {}
 mytaglist = {}
@@ -318,7 +333,7 @@ globalkeys = awful.util.table.join(
         end),
 
 		awful.key({ altkey, "Control" }, "l", function () awful.util.spawn("xscreensaver-command -lock") end),
-		awful.key({modkey,           }, "b", function ()  batteryShow("BAT0") end,"Infos battery"),
+		awful.key({modkey, "Control" }, "b", function ()  batteryShow("BAT0") end,"Infos battery"),
 
     -- Standard program
 		keydoc.group("Programs"),
@@ -326,20 +341,31 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey,           }, "Return", function () awful.util.spawn(terminal) end, "Spawn a terminal"),
     awful.key({ modkey, "Control" }, "r", awesome.restart),
     awful.key({ modkey, "Shift"   }, "q", awesome.quit),
-		awful.key({ modkey,           }, "c", function () awful.util.spawn("google-chrome") end, "Spawn google chrome"),
+		awful.key({ modkey,           }, "g", function () awful.util.spawn("google-chrome.bash") end, "Spawn google chrome"),
+		awful.key({ modkey,           }, "b", function () awful.util.spawn("firefox") end, "Spawn Mozilla Firefox"),
 		awful.key({ modkey,           }, "p", function () awful.util.spawn("pidgin") end, "Spawn pidgin"),
 		awful.key({ modkey,           }, "s", function () awful.util.spawn("skype") end, "Spawn skype"),
 
     awful.key({ modkey,           }, "l",     function () awful.tag.incmwfact( 0.05)    end),
     awful.key({ modkey,           }, "h",     function () awful.tag.incmwfact(-0.05)    end),
-    awful.key({ modkey, "Shift"   }, "h",     function () awful.tag.incnmaster( 1)      end),
-    awful.key({ modkey, "Shift"   }, "l",     function () awful.tag.incnmaster(-1)      end),
-    awful.key({ modkey, "Control" }, "h",     function () awful.tag.incncol( 1)         end),
-    awful.key({ modkey, "Control" }, "l",     function () awful.tag.incncol(-1)         end),
-    awful.key({ modkey,           }, "space", function () awful.layout.inc(layouts,  1) end),
-    awful.key({ modkey, "Shift"   }, "space", function () awful.layout.inc(layouts, -1) end),
+    awful.key({ modkey, "Shift"   }, "h",     function () awful.tag.incnmaster( 1)
+																								naughty.notify({ title = 'Master', text = tostring(awful.tag.getnmaster()), timeout = 1 }) end),
+    awful.key({ modkey, "Shift"   }, "l",     function () awful.tag.incnmaster(-1)
+																								naughty.notify({ title = 'Master', text = tostring(awful.tag.getnmaster()), timeout = 1 }) end),
+    awful.key({ modkey, "Control" }, "h",     function () awful.tag.incncol( 1)
+																								naughty.notify({ title = 'Columns', text = tostring(awful.tag.getncol()), timeout = 1 }) end),
+    awful.key({ modkey, "Control" }, "l",     function () awful.tag.incncol(-1)
+																								naughty.notify({ title = 'Columns', text = tostring(awful.tag.getncol()), timeout = 1 }) end),
+    awful.key({ modkey,           }, "space", function () awful.layout.inc(layouts,  1)
+																								naughty.notify({ title = 'Layout', text = awful.layout.getname(), timeout = 1 }) end),
+    awful.key({ modkey, "Shift"   }, "space", function () awful.layout.inc(layouts, -1)
+																								naughty.notify({ title = 'Layout', text = awful.layout.getname(), timeout = 1 }) end),
 
     awful.key({ modkey, "Control" }, "n", awful.client.restore),
+
+    -- Thinkpad Touchpad Toggle for awesome wm
+    awful.key({}, "XF86TouchpadToggle", function ()
+      awful.util.spawn_with_shell("synclient TouchpadOff=$(synclient -l | grep -c 'TouchpadOff.*=.*0')") end),
 
     -- Prompt
 		keydoc.group("Prompt"),
@@ -368,6 +394,26 @@ clientkeys = awful.util.table.join(
     awful.key({ modkey,           }, "o",      awful.client.movetoscreen                        ),
     awful.key({ modkey, "Shift"   }, "r",      function (c) c:redraw()                       end),
     awful.key({ modkey,           }, "t",      function (c) c.ontop = not c.ontop            end),
+    awful.key({ modkey, "Shift"   }, ",",
+        function (c)
+            local curidx = awful.tag.getidx(c:tags()[1])
+            if curidx == 1 then
+                c:tags({screen[mouse.screen]:tags()[9]})
+            else
+                c:tags({screen[mouse.screen]:tags()[curidx - 1]})
+            end
+        end),
+    awful.key({ modkey, "Shift"   }, ".",
+      function (c)
+            local curidx = awful.tag.getidx(c:tags()[1])
+            if curidx == 9 then
+                c:tags({screen[mouse.screen]:tags()[1]})
+            else
+                c:tags({screen[mouse.screen]:tags()[curidx + 1]})
+            end
+        end),
+		awful.key({ modkey, "Shift"   }, "Left", shift_to_tag(-1)),
+		awful.key({ modkey, "Shift"   }, "Right", shift_to_tag(1)),
     awful.key({ modkey,           }, "n",
         function (c)
             -- The client currently has the input focus, so it cannot be
